@@ -1,0 +1,3 @@
+[.] Create a directory structure
+[.]  download all the dependencies.
+[.]create a express server.
