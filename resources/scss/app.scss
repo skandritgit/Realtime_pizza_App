@@ -1,7 +1,7 @@
 @import './variable';
 
 body{
-    font-family: 'lato',sans-serif;
+    font-family: sans-serif;
     -webkit-font-smoothing:antialiased;
     color: $dark;
 }
@@ -36,4 +36,28 @@ section.hero{
        border-color: $pure;
 
           }
+}
+.btn-primary{
+    background: $primary;
+    &:hover{
+        transition: $smooth;
+       background:$primary-hover;
+          }
+}
+
+section.cart{
+    background: $secondary;
+}
+.account{
+    color: $primary;
+}
+section.login{
+    background:$secondary ;
+    min-height: calc(99vh - 82px);
+    a{
+        color: $primary;
+       &:hover{
+        color: $primary-hover ;
+       }
+    }
 }
