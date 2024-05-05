@@ -1,3 +1,13 @@
 [.] Create a directory structure
 [.]  download all the dependencies.
 [.]create a express server.
+[.] git setup and first commit
+[.] install laraval mix and setup js and scss
+[.] install tailwaind css
+[.]create home page using html and css
+[.] create cart page
+- order summary section 
+-empty section
+[.] move route to routes folder
+[.] create dedicated controller
+[.] 
