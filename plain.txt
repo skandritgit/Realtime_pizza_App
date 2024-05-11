@@ -10,4 +10,10 @@
 -empty section
 [.] move route to routes folder
 [.] create dedicated controller
-[.] 
+[.] axios to send ajax call
+[.] install notification using noty
+[.] create login page 
+[.] create register page
+[.] build register crud 
+-dependencies express-flash express-session dotenv
+-status code 
