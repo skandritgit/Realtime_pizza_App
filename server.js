@@ -48,6 +48,15 @@ app.use(passport.session())
 app.use(flash());
 
 
+app.use(express.urlencoded({extended:false}));
+app.use(express.json());
+
+
+
+app.use(expresslayouts);
+app.set('view engine', "ejs");
+app.set('views',path.join(__dirname,"/resources/views"));
+app.use(express.static('public'));
 //global middleware
 app.use((req,res,next)=>{
     res.locals.session=req.session;
@@ -57,12 +66,9 @@ app.use((req,res,next)=>{
 
 
 
-app.use(express.urlencoded({extended:false}));
-app.use(express.json());
-app.use(expresslayouts);
-app.set('view engine', "ejs");
-app.set('views',path.join(__dirname,"/resources/views"));
-app.use(express.static('public'));
+
+
+
 
 
 require("./routes/web")(app);

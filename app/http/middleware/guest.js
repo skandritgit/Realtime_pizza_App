@@ -4,7 +4,7 @@ function guest(req,res,next){
    }
    else if(req.isAuthenticated()){
      
-   return res.redirect("/login")
+   return res.redirect("/")
    }
 
 }

@@ -27,16 +27,20 @@
             <span class="account text-2xl font-bold ml-2">₹<%=session.cart.totalprice  %></span>
         </div>
         <div>
-            <form action="" class="mt-12">
-                <input class="border border-gray-500 w-1/2 p-2 mb-4" type="Number" placeholder="Phonenumber">
-                <input class="border border-gray-500 w-1/2 p-2" type="text" placeholder="Enter your address ">
-            <div>
-                <button class="btn-primary py-2 px-6 rounded-full mt-6 font-bold text-white"  type="submit">Order now</button>
-            </div>
-            </form>
+            <% if (user) { %>
+                <form action="/order" method="POST" class="mt-12">
+                    <input class="border border-gray-500 w-1/2 p-2 mb-4" type="Number" name="phone"  placeholder="Phonenumber">
+                    <input class="border border-gray-500 w-1/2 p-2" name="address"  type="text" placeholder="Enter your address ">
+                <div>
+                    <button class="btn-primary py-2 px-6 rounded-full mt-6 font-bold text-white"  type="submit">Order now</button>
+                </div>
+                </form>
+            <% }else {%>
+            
         </div>
        
-        <a class="inline-block px-6 py-2 rounded-full btn-primary text-lg text-white mt-2 font-bold" href="">Login to continue</a>
+        <a class="inline-block px-6 py-2 rounded-full btn-primary text-lg text-white mt-2 font-bold" href="/login">Login to continue</a>
+        <% } %>
     </div>
      </div> 
 <%}else { %>
@@ -54,6 +58,6 @@
         <a href="/" class="inline-block px-6 py-2 rounded-full btn-primary font-bold mt-12">Go Back</a>
 
     </div>
-</div> -->
+</div> 
 <% } %>
 </section>

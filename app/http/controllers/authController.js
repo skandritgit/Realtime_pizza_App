@@ -2,6 +2,9 @@ const { request } = require("express");
 const User = require("../../models/user");
 const bcrypt=require("bcrypt");
 const passport=require("passport");
+const _getredirect=(req)=>{
+    return req.user.role=='admin'? '/admin/orders': '/customer/orders'
+}
 
 
 function authController() {
@@ -26,7 +29,7 @@ function authController() {
                     return next(err)
                   }
 
-                  return res.redirect('/')
+                  return res.redirect(_getredirect(req))
                 })
             })(req,res,next)
 
