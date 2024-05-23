@@ -13,7 +13,7 @@ return {
             else{
                 res.render("admin/orders")
             }
-             console.log(order);
+            
 
         })
 

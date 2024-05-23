@@ -86,6 +86,24 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./app/http/middleware/admin.js":
+/*!**************************************!*\
+  !*** ./app/http/middleware/admin.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function admin(req, res, next) {
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    return next();
+  } else {
+    return res.redirect('/');
+  }
+}
+module.exports = admin;
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -27277,8 +27295,17 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _app_http_middleware_admin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../app/http/middleware/admin */ "./app/http/middleware/admin.js");
+/* harmony import */ var _app_http_middleware_admin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_app_http_middleware_admin__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 var Noty = __webpack_require__(/*! noty */ "./node_modules/noty/lib/noty.js");
+
 
 var cartCounter = document.querySelector("#cartCounter");
 var addtocart = document.querySelectorAll(".add-to-card");
@@ -27312,7 +27339,7 @@ if (alertMsg) {
     alertMsg.remove();
   }, 2000);
 }
-function initAdmin() {
+function initAdmin(socket) {
   var ordertablebody = document.querySelector("#ordertablebody");
   console.log("hhhhhhhhhhhhhhh");
   var orders = [];
@@ -27322,7 +27349,6 @@ function initAdmin() {
       "X-Requested-With": "XMLHttpRequest"
     }
   }).then(function (res) {
-    console.log(res);
     orders = res.data;
     markup = generateMarkup(orders);
     ordertablebody.innerHTML = markup;
@@ -27340,8 +27366,72 @@ function initAdmin() {
       return "\n           <tr>\n           <td class=\"border px-4 py-2 text-green-900\">\n               <p>".concat(order._id, "</p>\n               <div>").concat(renderItems(order.items), "</div>\n           </td>\n           <td class=\"border px-4 py-2\">").concat(order.customerId.name, "</td>\n           <td class=\"border px-4 py-2\">").concat(order.address, "</td>\n           <td class=\"border px-4 py-2\">\n               <div class=\"inline-block relative w-64\">\n                   <form action=\"/admin/order/status\" method=\"POST\">\n                       <input type=\"hidden\" name=\"orderId\" value=\"").concat(order._id, "\">\n                       <select name=\"status\" onchange=\"this.form.submit()\"\n                           class=\"block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline\">\n                           <option value=\"order_placed\"\n                               ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                               Placed</option>\n                           <option value=\"confirmed\" ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                               Confirmed</option>\n                           <option value=\"prepared\" ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                               Prepared</option>\n                           <option value=\"delivered\" ").concat(order.status === 'delivered' ? 'selected' : '', ">\n                               Delivered\n                           </option>\n                           <option value=\"completed\" ").concat(order.status === 'completed' ? 'selected' : '', ">\n                               Completed\n                           </option>\n                       </select>\n                   </form>\n                   <div\n                       class=\"pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700\">\n                       <svg class=\"fill-current h-4 w-4\" xmlns=\"http://www.w3.org/2000/svg\"\n                           viewBox=\"0 0 20 20\">\n                           <path\n                               d=\"M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z\" />\n                       </svg>\n                   </div>\n               </div>\n           </td>\n           <td class=\"border px-4 py-2\">\n               ").concat(moment__WEBPACK_IMPORTED_MODULE_0___default()(order.createdAt).format('hh:mm A'), "\n           </td>\n       </tr>\n   ");
     }).join('');
   }
+  socket.on('orderplaced', function (data) {
+    new Noty({
+      type: "success",
+      timeout: 1000,
+      progressBar: false,
+      text: "New Order"
+    }).show();
+    orders.unshift(data);
+    ordertablebody.innerHTML = '';
+    ordertablebody.innerHTML = generateMarkup(orders);
+  });
 }
-initAdmin();
+var hiddeninput = document.getElementById("hiddeninput");
+var statues = document.querySelectorAll(".status_line");
+var order = hiddeninput ? hiddeninput.value : null;
+order = JSON.parse(order);
+var time = document.createElement('small');
+function updatestatus(order) {
+  statues.forEach(function (status) {
+    status.classList.remove('step-completed');
+    status.classList.remove('current');
+  });
+  var stepCompleted = true;
+  statues.forEach(function (status) {
+    var dataProp = status.dataset.status;
+    if (stepCompleted) {
+      status.classList.add("step-completed");
+    }
+    if (dataProp === order.status) {
+      stepCompleted = false;
+      time.innerText = moment__WEBPACK_IMPORTED_MODULE_0___default()(order.updatedAt).format('hh:mm A');
+      status.appendChild(time);
+      if (status.nextElementSibling) {
+        status.nextElementSibling.classList.add("current");
+      }
+    }
+  });
+}
+
+// updatestatus(order);
+
+//Socket
+
+var socket = io();
+initAdmin(socket);
+if (order) {
+  //join
+  socket.emit('join', "order_".concat(order._id));
+}
+var adminAreaPath = window.location.pathname;
+console.log(adminAreaPath);
+if (adminAreaPath.includes('admin')) {
+  socket.emit('join', 'adminRoom');
+}
+socket.on('orderupdated', function (data) {
+  var updatedOrder = _objectSpread({}, order);
+  updatedOrder.updatedAt = moment__WEBPACK_IMPORTED_MODULE_0___default()().format();
+  updatedOrder.status = data.status;
+  updatestatus(updatedOrder);
+  new Noty({
+    type: "success",
+    timeout: 1000,
+    progressBar: false,
+    text: "Order Updated"
+  }).show();
+});
 
 /***/ }),
 
