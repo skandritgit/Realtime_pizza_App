@@ -14,7 +14,7 @@ const Emitter=require("events");
 const app=express();
 
 const connection=mongoose.connection;
-mongoose.connect("mongodb://127.0.0.1:27017/Pizza",{
+mongoose.connect(process.env.MONGO_CONNECTION_URL,{
 
 }).then(()=>{
     console.log("connection is successfull...");
@@ -77,6 +77,12 @@ app.use((req,res,next)=>{
 
 require("./routes/web")(app);
 
+app.get('*',(req,res)=>{
+    res.render("errors/404",{
+        error:'oops page not found '
+    });
+})
+
 const server=app.listen(port,()=>{
     console.log(`Server is connected at ${port}`);
 })
@@ -89,10 +95,10 @@ const io=require('socket.io')(server)
 
 io.on("connection",(socket)=>{
     //join
-  console.log(socket.id)
+  
 
   socket.on("join",(orderId)=>{
-    console.log(orderId)
+   
 
     socket.join(orderId)
 

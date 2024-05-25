@@ -20,7 +20,9 @@ function orderController(){
 
              order.save().then(async (result)=>{
             const data= await Order.populate(result,{ path:'customerId'})
-               delete req.session.cart
+            console.log(data);
+            delete req.session.cart
+               
                   req.flash('success','order placed successfully')
                   
                   //Emit
@@ -40,7 +42,10 @@ function orderController(){
          const order= await Order.find({customerId:req.user._id},
             null,
             {sort:{'createdAt':-1}}
-         )
+            )
+            res.header('Cache-Control', 'no-store')
+            
+         
      
          
         return res.render('customers/orders' ,{order,moment})

@@ -75,6 +75,10 @@ a.link{
     padding-left: 8px!important;
 }
 
+.status-box ul {
+    margin-left: 84px;
+}
+
 section.status{
     background: $secondary;
     min-height: calc(98vh - 75px)
@@ -200,4 +204,30 @@ section.status{
 }
 
 
+@media(max-width:1060px){
+    .container {
+       max-width: 90%;
+    }
+    table{
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
 
+
+@media(max-width:768px){
+    .status-box ul li span:before{
+        font-size: 34px;
+    }
+
+}
+
+.btnerror{
+    background: $primary;
+    
+}
+
+.page{
+    color:$gray;
+}
