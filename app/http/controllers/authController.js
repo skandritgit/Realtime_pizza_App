@@ -29,7 +29,7 @@ function authController() {
                     return next(err)
                   }
 
-                  return res.redirect(_getredirect(req))
+                  return res.redirect('/')
                 })
             })(req,res,next)
 
@@ -38,7 +38,7 @@ function authController() {
             res.render("auth/register")
         },
         async postRegister(req, res) {
-            let { name, email, password } = req.body;
+            let { name, email, password,role } = req.body;
 
             if (!name || !email || !password) {
              req.flash('error', 'All filed are required')
@@ -64,11 +64,12 @@ function authController() {
             const user =await User.create({
                 name,
                 email,
+                role,
                 password:hashedpassword,
             })
             await user.save().then((user)=>{
 
-                return res.redirect("/")
+                return res.redirect("/login")
 
              }).catch((error)=>{
                 req.flash('error', 'Something Went Wrong')
