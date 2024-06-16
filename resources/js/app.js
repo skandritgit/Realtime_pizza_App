@@ -60,7 +60,7 @@ if (alertMsg) {
 function initAdmin(socket) {
 
     const ordertablebody = document.querySelector("#ordertablebody");
-    console.log("hhhhhhhhhhhhhhh")
+    
     let orders = []
     let markup
 
@@ -219,7 +219,7 @@ socket.emit('join',`order_${order._id}`)
 }
 
 let adminAreaPath=window.location.pathname;
-console.log(adminAreaPath);
+
 
 if(adminAreaPath.includes('admin')){
     initAdmin(socket);
